@@ -1,0 +1,86 @@
+type DeleteApp @entity(immutable: true) {
+  id: Bytes!
+  appID: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewApp @entity(immutable: true) {
+  id: Bytes!
+  appID: BigInt! # uint256
+  appOwner: Bytes! # address
+  appName: String! # string
+  appIPFSHash: String! # string
+  appAddData: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ReleaseApp @entity(immutable: true) {
+  id: Bytes!
+  appID: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleAdminChanged @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  previousAdminRole: Bytes! # bytes32
+  newAdminRole: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleGranted @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleRevoked @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type StoreUpdate @entity(immutable: true) {
+  id: Bytes!
+  versionCode: BigInt! # uint256
+  ipfsHash: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateApp @entity(immutable: true) {
+  id: Bytes!
+  appID: BigInt! # uint256
+  appOwner: Bytes! # address
+  appName: String! # string
+  appIPFSHash: String! # string
+  appAddData: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VerifyApp @entity(immutable: true) {
+  id: Bytes!
+  appID: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

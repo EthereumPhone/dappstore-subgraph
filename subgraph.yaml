@@ -1,0 +1,48 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: DAppStore
+    network: goerli
+    source:
+      address: "0xF52277c2359aca79A9991d718Cc7e5F5764FABe4"
+      abi: DAppStore
+      startBlock: 8721418
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DeleteApp
+        - NewApp
+        - ReleaseApp
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - StoreUpdate
+        - UpdateApp
+        - VerifyApp
+      abis:
+        - name: DAppStore
+          file: ./abis/DAppStore.json
+      eventHandlers:
+        - event: DeleteApp(uint256)
+          handler: handleDeleteApp
+        - event: NewApp(uint256,address,string,string,string)
+          handler: handleNewApp
+        - event: ReleaseApp(uint256)
+          handler: handleReleaseApp
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: StoreUpdate(uint256,string)
+          handler: handleStoreUpdate
+        - event: UpdateApp(uint256,address,string,string,string)
+          handler: handleUpdateApp
+        - event: VerifyApp(uint256)
+          handler: handleVerifyApp
+      file: ./src/d-app-store.ts

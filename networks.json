@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "DAppStore": {
+      "address": "0xF52277c2359aca79A9991d718Cc7e5F5764FABe4",
+      "startBlock": 8721418
+    }
+  }
+}

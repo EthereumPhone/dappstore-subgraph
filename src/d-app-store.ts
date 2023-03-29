@@ -20,93 +20,30 @@ import {
   UpdateApp,
   VerifyApp
 } from "../generated/schema"
+import { Bytes, store } from '@graphprotocol/graph-ts';
 
 export function handleDeleteApp(event: DeleteAppEvent): void {
-  let entity = new DeleteApp(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.appID = event.params.appID
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
+  let id = Bytes.fromHexString(event.params.appID.toHexString());
+  let entity = NewApp.load(id);
+  if (entity != null) {
+    store.remove("NewApp", event.params.appID.toHexString());
+  }
 }
+
 
 export function handleNewApp(event: NewAppEvent): void {
-  let entity = new NewApp(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.appID = event.params.appID
-  entity.appOwner = event.params.appOwner
-  entity.appName = event.params.appName
-  entity.appIPFSHash = event.params.appIPFSHash
-  entity.appAddData = event.params.appAddData
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleReleaseApp(event: ReleaseAppEvent): void {
-  let entity = new ReleaseApp(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.appID = event.params.appID
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleRoleAdminChanged(event: RoleAdminChangedEvent): void {
-  let entity = new RoleAdminChanged(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.role = event.params.role
-  entity.previousAdminRole = event.params.previousAdminRole
-  entity.newAdminRole = event.params.newAdminRole
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleRoleGranted(event: RoleGrantedEvent): void {
-  let entity = new RoleGranted(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.role = event.params.role
-  entity.account = event.params.account
-  entity.sender = event.params.sender
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleRoleRevoked(event: RoleRevokedEvent): void {
-  let entity = new RoleRevoked(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.role = event.params.role
-  entity.account = event.params.account
-  entity.sender = event.params.sender
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
+  let entity = NewApp.load(Bytes.fromHexString(event.params.appID.toHexString()));
+  if (entity == null) {
+    entity = new NewApp(Bytes.fromHexString(event.params.appID.toHexString()));
+  }
+  entity.appOwner = event.params.appOwner;
+  entity.appName = event.params.appName;
+  entity.appIPFSHash = event.params.appIPFSHash;
+  entity.appAddData = event.params.appAddData;
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+  entity.save();
 }
 
 export function handleStoreUpdate(event: StoreUpdateEvent): void {
@@ -124,27 +61,15 @@ export function handleStoreUpdate(event: StoreUpdateEvent): void {
 }
 
 export function handleUpdateApp(event: UpdateAppEvent): void {
-  let entity = new UpdateApp(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
+  let entity = NewApp.load(Bytes.fromHexString(event.params.appID.toHexString()));
+  if (entity == null) {
+    return;
+  }
   entity.appID = event.params.appID
   entity.appOwner = event.params.appOwner
   entity.appName = event.params.appName
   entity.appIPFSHash = event.params.appIPFSHash
   entity.appAddData = event.params.appAddData
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleVerifyApp(event: VerifyAppEvent): void {
-  let entity = new VerifyApp(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.appID = event.params.appID
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
